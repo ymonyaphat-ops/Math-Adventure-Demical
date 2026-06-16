@@ -1723,6 +1723,8 @@ function endLevel(){
     winSound.play();
 
     nextBtn.style.display = "inline-block";
+	
+	saveScore();
 
   }else{
 
@@ -2178,8 +2180,32 @@ function showChampionScreen(){
 
     🏆 ผู้พิชิตอาณาจักรทศนิยม 🏆
   `;
+  
+  saveScore();
 
   document.getElementById("championScreen").style.display = "flex";
+}
+
+function saveScore(){
+
+  let playerName =
+    document.getElementById("playerName").value;
+
+  let totalScore = 0;
+
+  for(let i=0;i<stageScores.length;i++){
+    totalScore += stageScores[i];
+  }
+
+  fetch("https://script.google.com/macros/s/AKfycbx3VzUrgaoEFh3pEPypZ6vHI1Zp2pp0STnp_ACwjv4WfLlm93nzVhK8nDsiN_JOVoEK/exec",{
+    method:"POST",
+    body:JSON.stringify({
+      name: playerName,
+      level: level,
+      score: totalScore
+    })
+  });
+
 }
 
 </script>
